@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BMC Menu Banner Frame</title>
+  <meta name="description" content="Balcony Music Club menu banner iframe frame.">
+  <base target="_top">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./site-nav.css?v=20260615">
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 0;
+      width: 100%;
+      background: transparent;
+      overflow: hidden;
+    }
+
+    body {
+      display: block;
+    }
+
+    .site-header {
+      margin: 0 auto !important;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header" aria-label="Balcony Music Club site header">
+    <a class="brand" href="https://www.balconymusicclub.com/" aria-label="Balcony Music Club home">
+      <img src="https://floydclaptonblues.github.io/BMC-Homepage/bmc_homepage_build/assets/bmc-logo-pixel.png?v=logo-revert-jazzycat-room-20260615" alt="Balcony Music Club">
+    </a>
+
+    <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false">☰</button>
+
+    <nav class="main-nav" aria-label="Primary navigation">
+      <a href="https://www.balconymusicclub.com/">Home</a>
+      <a href="https://shows.balconymusicclub.com/">Shows</a>
+      <a href="https://www.balconymusicclub.com/host-your-event">Host Your Event</a>
+      <a href="https://www.balconymusicclub.com/store">Store</a>
+      <a href="https://www.balconymusicclub.com/ask-jazzycat">Ask JazzyCat</a>
+    </nav>
+
+    <div class="header-actions header-socials" aria-label="Balcony Music Club social links">
+      <a class="social-btn" href="https://www.instagram.com/balconymusicclub" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram">IG</a>
+      <a class="social-btn" href="https://www.youtube.com/@BalconyMusicClub" target="_blank" rel="noopener noreferrer" aria-label="YouTube" title="YouTube">YT</a>
+      <a class="social-btn" href="https://www.facebook.com/balconymusicclub" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook">FB</a>
+      <a class="social-btn social-btn--app" href="https://app.balconymusicclub.com/" target="_blank" rel="noopener noreferrer" aria-label="BMC App" title="BMC App">APP</a>
+    </div>
+  </header>
+
+  <script src="./site-nav.js?v=20260615" defer></script>
+  <script>
+    (function () {
+      const header = document.querySelector(".site-header");
+      const nav = document.querySelector(".main-nav");
+      const toggle = document.querySelector(".nav-toggle");
+
+      function measureBannerHeight() {
+        if (!header) return 120;
+
+        const headerRect = header.getBoundingClientRect();
+        let bottom = headerRect.bottom;
+
+        if (nav && nav.classList.contains("open")) {
+          const navRect = nav.getBoundingClientRect();
+          bottom = Math.max(bottom, navRect.bottom);
+        }
+
+        return Math.ceil(Math.max(80, bottom));
+      }
+
+      function postHeight() {
+        window.parent.postMessage({
+          type: "bmc-menu-banner-height",
+          height: measureBannerHeight()
+        }, "*");
+      }
+
+      window.addEventListener("load", postHeight);
+      window.addEventListener("resize", postHeight);
+      document.addEventListener("DOMContentLoaded", postHeight);
+
+      if (toggle) {
+        toggle.addEventListener("click", function () {
+          window.setTimeout(postHeight, 0);
+          window.setTimeout(postHeight, 180);
+        });
+      }
+
+      if (nav) {
+        nav.addEventListener("click", function () {
+          window.setTimeout(postHeight, 0);
+          window.setTimeout(postHeight, 180);
+        });
+      }
+
+      if (window.ResizeObserver && header) {
+        new ResizeObserver(postHeight).observe(header);
+      }
+
+      window.setTimeout(postHeight, 250);
+      window.setTimeout(postHeight, 900);
+    })();
+  </script>
+</body>
+</html>
