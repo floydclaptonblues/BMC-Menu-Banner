@@ -1,31 +1,29 @@
-<!-- BMC Menu Banner Embed -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://floydclaptonblues.github.io/BMC-Menu-Banner/site-nav.css?v=20260615">
+<!-- BMC Menu Banner iframe embed -->
+<div class="bmc-menu-banner-embed" style="width:100%;max-width:100%;margin:0;padding:0;overflow:hidden;line-height:0;">
+  <iframe
+    id="bmcMenuBannerFrame"
+    title="Balcony Music Club menu banner"
+    src="https://floydclaptonblues.github.io/BMC-Menu-Banner/frame.html?v=20260615-frame"
+    loading="eager"
+    scrolling="no"
+    allowtransparency="true"
+    style="display:block;width:100%;height:150px;max-width:100%;margin:0;padding:0;border:0;background:transparent;overflow:hidden;"
+  ></iframe>
+</div>
 
-<header class="site-header" aria-label="Balcony Music Club site header">
-  <a class="brand" href="https://www.balconymusicclub.com/" aria-label="Balcony Music Club home">
-    <img src="https://floydclaptonblues.github.io/BMC-Homepage/bmc_homepage_build/assets/bmc-logo-pixel.png?v=logo-revert-jazzycat-room-20260615" alt="Balcony Music Club">
-  </a>
+<script>
+(function () {
+  const frame = document.getElementById("bmcMenuBannerFrame");
+  if (!frame) return;
 
-  <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false">☰</button>
+  window.addEventListener("message", function (event) {
+    if (event.origin !== "https://floydclaptonblues.github.io") return;
+    const data = event.data || {};
+    if (data.type !== "bmc-menu-banner-height") return;
 
-  <nav class="main-nav" aria-label="Primary navigation">
-    <a href="https://www.balconymusicclub.com/">Home</a>
-    <a href="https://shows.balconymusicclub.com/">Shows</a>
-    <a href="https://www.balconymusicclub.com/host-your-event">Host Your Event</a>
-    <a href="https://www.balconymusicclub.com/store">Store</a>
-    <a href="https://www.balconymusicclub.com/ask-jazzycat">Ask JazzyCat</a>
-  </nav>
-
-  <div class="header-actions header-socials" aria-label="Balcony Music Club social links">
-    <a class="social-btn" href="https://www.instagram.com/balconymusicclub" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram">IG</a>
-    <a class="social-btn" href="https://www.youtube.com/@BalconyMusicClub" target="_blank" rel="noopener noreferrer" aria-label="YouTube" title="YouTube">YT</a>
-    <a class="social-btn" href="https://www.facebook.com/balconymusicclub" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook">FB</a>
-    <a class="social-btn social-btn--app" href="https://app.balconymusicclub.com/" target="_blank" rel="noopener noreferrer" aria-label="BMC App" title="BMC App">APP</a>
-  </div>
-</header>
-
-<script src="https://floydclaptonblues.github.io/BMC-Menu-Banner/site-nav.js?v=20260615" defer></script>
-<!-- /BMC Menu Banner Embed -->
+    const nextHeight = Math.max(80, Math.min(520, Number(data.height) || 150));
+    frame.style.height = nextHeight + "px";
+  });
+})();
+</script>
+<!-- /BMC Menu Banner iframe embed -->
